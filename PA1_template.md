@@ -29,7 +29,7 @@ head(df)
 df$date<-as.factor(df$date)
 #take step totals
 stepsums<-by(df$steps,df$date,function(x) sum(x,na.rm=TRUE))
-hist(stepsums,breaks=10)
+hist(stepsums,breaks=10,main='Histogram: Total Number of Steps Per Day',xlab='Total Numer of Steps Per Day')
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-2-1.png)
@@ -68,7 +68,7 @@ df$interval<-as.factor(df$interval)
 intavgs<-by(df$steps,df$interval,function(x) mean(x,na.rm=TRUE))
 
 #plot time series
-plot(as.numeric(levels(df$interval)),intavgs,type='l')
+plot(as.numeric(levels(df$interval)),intavgs,type='l',main='Average Daily Activity Time Series',xlab='5 min Interval', ylab='Average Steps per 5 min Interval')
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-4-1.png)
@@ -87,7 +87,7 @@ maxint
 
 
 ## Imputing missing values
-Here the mean of the corresponding interval across all days to fill in na values 
+In order to impute missing values, each missing point is replaced with the mean of the interval corresponding to the NA point is taken across all days.
 
 6. Code to describe and show a strategy for imputing missing data
 
@@ -110,7 +110,7 @@ imputed<-round(as.numeric(imputed),0)
 ```r
 #count the totoals
 imputedstepsums<-by(imputed,df$date,sum)
-hist(imputedstepsums,breaks=10)
+hist(imputedstepsums,breaks=10,main='Histogram: Total Number of Steps Per Day With Imputed Data',xlab='Total Numer of Steps Per Day With Imputed Data')
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-7-1.png)
@@ -141,7 +141,7 @@ require(lattice)
 ```
 
 ```r
-xyplot(avgs$imputed~avgs$interval|avgs$days,type='l',layout=c(1,2))
+xyplot(avgs$imputed~avgs$interval|avgs$days,type='l',layout=c(1,2),main='Average Daily Activity Time Series',xlab='5 min Interval', ylab='Average Steps per 5 min Interval')
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-8-1.png)

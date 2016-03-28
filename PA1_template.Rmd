@@ -22,7 +22,7 @@ head(df)
 df$date<-as.factor(df$date)
 #take step totals
 stepsums<-by(df$steps,df$date,function(x) sum(x,na.rm=TRUE))
-hist(stepsums,breaks=10)
+hist(stepsums,breaks=10,main='Histogram: Total Number of Steps Per Day',xlab='Total Numer of Steps Per Day')
 ```
 
 3. Mean and median number of steps taken each day
@@ -48,7 +48,7 @@ df$interval<-as.factor(df$interval)
 intavgs<-by(df$steps,df$interval,function(x) mean(x,na.rm=TRUE))
 
 #plot time series
-plot(as.numeric(levels(df$interval)),intavgs,type='l')
+plot(as.numeric(levels(df$interval)),intavgs,type='l',main='Average Daily Activity Time Series',xlab='5 min Interval', ylab='Average Steps per 5 min Interval')
 ```
 
 5. The 5-minute interval that, on average, contains the maximum number of steps
@@ -60,7 +60,7 @@ maxint
 
 
 ## Imputing missing values
-Here the mean of the corresponding interval across all days to fill in na values 
+In order to impute missing values, each missing point is replaced with the mean of the interval corresponding to the NA point is taken across all days.
 
 6. Code to describe and show a strategy for imputing missing data
 ```{r}
@@ -75,7 +75,7 @@ imputed<-round(as.numeric(imputed),0)
 ```{r}
 #count the totoals
 imputedstepsums<-by(imputed,df$date,sum)
-hist(imputedstepsums,breaks=10)
+hist(imputedstepsums,breaks=10,main='Histogram: Total Number of Steps Per Day With Imputed Data',xlab='Total Numer of Steps Per Day With Imputed Data')
 ```
 
 ## Are there differences in activity patterns between weekdays and weekends?
@@ -96,7 +96,7 @@ avgs<-aggregate(imputed ~ interval + days, df, mean)
 
 #plot the means
 require(lattice)
-xyplot(avgs$imputed~avgs$interval|avgs$days,type='l',layout=c(1,2))
+xyplot(avgs$imputed~avgs$interval|avgs$days,type='l',layout=c(1,2),main='Average Daily Activity Time Series',xlab='5 min Interval', ylab='Average Steps per 5 min Interval')
 
 ```
 
